@@ -1,5 +1,7 @@
+import json
 from fastapi import HTTPException, routing, APIRouter
 from fastapi import Depends
+from fastapi.responses import HTMLResponse,Response
 from sqlalchemy.orm import Session
 from model import StaticPages, Profile
 from pydantic import BaseModel, Field
@@ -43,11 +45,14 @@ class ProfileRequest(BaseModel):
 
 @routers.get("/allpages", status_code=200)
 async def get_allpages(db: Session = Depends(get_db)):
+    
     pages_model = db.query(StaticPages).all()
     if pages_model is None:
         raise HTTPException(400, detail="Record not found")
     
-    return pages_model
+    Response.headers = "application/json"
+    #html_content =json.loads(pages_model)
+    return Response(content= json.loads(pages_model), media_type="application/json")
 
 @routers.get("/profile", status_code=200)
 async def get_profile(db: Session = Depends(get_db)):

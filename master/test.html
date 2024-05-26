@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REST API Example</title>
+    <script>
+        async function callApi(){
+            let result = await fetch("http://127.0.0.1:8000/allpages");
+            result = await result.json()
+            console.warn(result)
+        }
+        callApi()
+    </script>
+</head>
+<body>
+    API Call
+</body>
+</html>
